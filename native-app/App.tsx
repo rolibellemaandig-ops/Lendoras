@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar, Text } from 'react-native';
 
+// Error Boundary
+import ErrorBoundary from './src/components/ErrorBoundary';
+
 // Screens
 import HomeScreen from './src/screens/HomeScreen';
 import ItemDetailScreen from './src/screens/ItemDetailScreen';
@@ -249,9 +252,11 @@ function RootNavigator() {
 // App Component
 export default function App() {
   return (
-    <AuthProvider>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      <RootNavigator />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+        <RootNavigator />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
