@@ -1,0 +1,17 @@
+{
+  "name": "Lendora",
+  "short_name": "Lendora",
+  "description": "Campus rental marketplace for students who want to buy less and do more.",
+  "start_url": "./Lendora-standalone.html",
+  "display": "standalone",
+  "background_color": "#f8fbff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "./icons/lendora-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

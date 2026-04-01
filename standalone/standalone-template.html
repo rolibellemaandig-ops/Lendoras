@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Lendora">
+    <meta name="theme-color" content="#1e3a8a">
+    <title>Lendora | Buy less. Do more</title>
+    <link rel="manifest" href="data:application/json,%7B%7D">
+    <style>
+__INLINED_STYLES__
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        window.__lendoraBooted = false;
+        window.__lendoraRenderStarted = false;
+        window.__lendoraStartupErrorShown = false;
+        window.renderLendoraStartupError = (message) => {
+            const root = document.getElementById('root');
+            if (!root) return;
+            window.__lendoraStartupErrorShown = true;
+            root.innerHTML = `
+                <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(180deg, #f8fbff, #eef3fb); font-family: Manrope, Arial, sans-serif;">
+                    <div style="width: min(420px, 100%); background: rgba(255,255,255,0.96); border: 1px solid rgba(220,229,242,0.9); border-radius: 28px; padding: 28px; box-shadow: 0 18px 40px rgba(15,23,42,0.08); color: #0f172a;">
+                        <div style="display: inline-flex; width: 52px; height: 52px; border-radius: 16px; background: #eff6ff; color: #1e3a8a; align-items: center; justify-content: center; font-size: 24px; font-weight: 800;">!</div>
+                        <h1 style="margin: 18px 0 10px; font-size: 1.5rem; line-height: 1.15;">Lendora couldn't finish loading</h1>
+                        <p style="margin: 0; color: #475569; line-height: 1.65;">${message}</p>
+                    </div>
+                </div>
+            `;
+        };
+        window.addEventListener('error', (event) => {
+            if (event.error && !window.__lendoraBooted) {
+                window.renderLendoraStartupError(`Runtime error: ${event.error.message || 'Unknown error'}`);
+            }
+        }, true);
+        window.addEventListener('unhandledrejection', (event) => {
+            if (!window.__lendoraBooted) {
+                const reason = event.reason && event.reason.message ? event.reason.message : String(event.reason || 'Unknown promise rejection');
+                window.renderLendoraStartupError(`Startup promise failed: ${reason}`);
+            }
+        });
+        window.setTimeout(() => {
+            const root = document.getElementById('root');
+            const hasMarkup = root && root.innerHTML.trim().length > 0;
+            if (!window.__lendoraBooted && !window.__lendoraRenderStarted && !hasMarkup && !window.__lendoraStartupErrorShown) {
+                window.renderLendoraStartupError('The standalone app did not mount.');
+            }
+        }, 1800);
+    </script>
+    <script>
+__INLINED_REACT__
+    </script>
+    <script>
+__INLINED_REACT_DOM__
+    </script>
+    <script>
+__INLINED_FRAMER_MOTION__
+    </script>
+    <script>
+__INLINED_LEAFLET__
+    </script>
+    <script>
+__INLINED_APP_SCRIPT__
+    </script>
+</body>
+</html>

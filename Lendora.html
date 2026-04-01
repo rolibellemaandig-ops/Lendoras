@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=./Lendora-standalone.html">
+    <title>Lendora</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #f8fbff, #eef3fb);
+            font-family: Manrope, Arial, sans-serif;
+            color: #0f172a;
+        }
+
+        .card {
+            width: min(420px, calc(100vw - 32px));
+            padding: 28px;
+            border-radius: 28px;
+            border: 1px solid rgba(220, 229, 242, 0.9);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 1.6rem;
+            line-height: 1.1;
+        }
+
+        p {
+            margin: 0;
+            line-height: 1.6;
+            color: #475569;
+        }
+
+        a {
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Opening Lendora…</h1>
+        <p>If the app does not open automatically, use <a href="./Lendora-standalone.html">Lendora-standalone.html</a>.</p>
+    </div>
+    <script>
+        window.location.replace('./Lendora-standalone.html');
+    </script>
+</body>
+</html>
