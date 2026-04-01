@@ -2,35 +2,143 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar } from 'react-native';
+import { StatusBar, Text } from 'react-native';
 
 // Screens
-import HomeScreen from './screens/HomeScreen';
-import ItemDetailScreen from './screens/ItemDetailScreen';
-import MessagesScreen from './screens/MessagesScreen';
-import RentalsScreen from './screens/RentalsScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import MapScreen from './screens/MapScreen';
-import CreateListingScreen from './screens/CreateListingScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import ItemDetailScreen from './src/screens/ItemDetailScreen';
+import MessagesScreen from './src/screens/MessagesScreen';
+import RentalsScreen from './src/screens/RentalsScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import MapScreen from './src/screens/MapScreen';
+import CreateListingScreen from './src/screens/CreateListingScreen';
 
 // Context
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider, useAuth } from './src/context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Auth Navigator
-function AuthNavigator() {
+const screenOptions = {
+  headerStyle: {
+    backgroundColor: '#1e3a8a',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: '700',
+    fontSize: 18,
+  },
+  headerShadowVisible: false,
+};
+
+// Stack Navigators for each tab
+function ExploreStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="ExploreHome"
+        component={HomeScreen}
+        options={{ title: 'Lendora' }}
+      />
+      <Stack.Screen
+        name="ItemDetail"
+        component={ItemDetailScreen}
+        options={{ title: 'Item Details' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function MapStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="MapHome"
+        component={MapScreen}
+        options={{ title: 'Nearby Items' }}
+      />
+      <Stack.Screen
+        name="MapItemDetail"
+        component={ItemDetailScreen}
+        options={{ title: 'Item Details' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function SellStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="CreateListingHome"
+        component={CreateListingScreen}
+        options={{ title: 'Create Listing' }}
+      />
+      <Stack.Screen
+        name="ListingDetail"
+        component={ItemDetailScreen}
+        options={{ title: 'Listing Details' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function MessagesStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="MessagesHome"
+        component={MessagesScreen}
+        options={{ title: 'Messages' }}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={MessagesScreen}
+        options={({ route }: any) => ({
+          title: route.params?.otherUserName || 'Chat',
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function RentalsStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="RentalsHome"
+        component={RentalsScreen}
+        options={{ title: 'My Rentals' }}
+      />
+      <Stack.Screen
+        name="RentalDetail"
+        component={ItemDetailScreen}
+        options={{ title: 'Rental Details' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="ProfileHome"
+        component={ProfileScreen}
+        options={{ title: 'Profile' }}
+      />
+      <Stack.Screen
+        name="ProfileMessages"
+        component={MessagesScreen}
+        options={{ title: 'Messages' }}
+      />
+      <Stack.Screen
+        name="ProfileCreateListing"
+        component={CreateListingScreen}
+        options={{ title: 'New Listing' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -40,63 +148,80 @@ function AppNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#1e3a8a',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '600',
-        },
+        headerShown: false,
         tabBarActiveTintColor: '#1e3a8a',
         tabBarInactiveTintColor: '#999',
         tabBarStyle: {
-          paddingBottom: 8,
-          paddingTop: 8,
-          height: 60,
+          backgroundColor: '#fff',
+          borderTopColor: '#eee',
+          borderTopWidth: 1,
+          paddingBottom: 4,
         },
       }}
     >
       <Tab.Screen
-        name="Explore"
-        component={HomeScreen}
+        name="ExploreStack"
+        component={ExploreStack}
         options={{
           tabBarLabel: 'Explore',
-          title: 'Lendora',
+          tabBarIcon: ({ color }: any) => <Text style={{ fontSize: 20, color }}>🔍</Text>,
         }}
       />
       <Tab.Screen
-        name="Map"
-        component={MapScreen}
+        name="MapStack"
+        component={MapStack}
         options={{
           tabBarLabel: 'Map',
-          title: 'Campus Map',
+          tabBarIcon: ({ color }: any) => <Text style={{ fontSize: 20, color }}>📍</Text>,
         }}
       />
       <Tab.Screen
-        name="CreateListing"
-        component={CreateListingScreen}
+        name="SellStack"
+        component={SellStack}
         options={{
           tabBarLabel: 'Sell',
-          title: 'Create Listing',
+          tabBarIcon: ({ color }: any) => <Text style={{ fontSize: 20, color }}>📤</Text>,
         }}
       />
       <Tab.Screen
-        name="Messages"
-        component={MessagesScreen}
+        name="MessagesStack"
+        component={MessagesStack}
         options={{
           tabBarLabel: 'Messages',
-          title: 'Messages',
+          tabBarIcon: ({ color }: any) => <Text style={{ fontSize: 20, color }}>💬</Text>,
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="RentalsStack"
+        component={RentalsStack}
+        options={{
+          tabBarLabel: 'Rentals',
+          tabBarIcon: ({ color }: any) => <Text style={{ fontSize: 20, color }}>📦</Text>,
+        }}
+      />
+      <Tab.Screen
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
-          title: 'My Profile',
+          tabBarIcon: ({ color }: any) => <Text style={{ fontSize: 20, color }}>👤</Text>,
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+// Auth Navigator
+function AuthNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+    </Stack.Navigator>
   );
 }
 
@@ -112,16 +237,7 @@ function RootNavigator() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <>
-            <Stack.Screen name="App" component={AppNavigator} />
-            <Stack.Screen
-              name="ItemDetail"
-              component={ItemDetailScreen}
-              options={{
-                presentation: 'modal',
-              }}
-            />
-          </>
+          <Stack.Screen name="App" component={AppNavigator} />
         ) : (
           <Stack.Screen name="Auth" component={AuthNavigator} />
         )}
